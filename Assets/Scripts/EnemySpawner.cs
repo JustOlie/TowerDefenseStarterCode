@@ -63,6 +63,6 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("SpawnTester", 1f, 1f);
+        InvokeRepeating("SpawnTester", 2f, 2f);
     }
 }
