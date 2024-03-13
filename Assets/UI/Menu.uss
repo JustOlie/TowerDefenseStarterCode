@@ -58,6 +58,8 @@
 .screen-background {
     background-image: url('project://database/Assets/UI/bd2bd167d7b4f2165454504cba8fd3c7.jpg?fileID=2800000&guid=696018464bb5170489cbd7a9fb033a23&type=3#bd2bd167d7b4f2165454504cba8fd3c7');
     -unity-background-scale-mode: scale-and-crop;
+    justify-content: center;
+    align-items: center;
 }
 
 .menu-center-panel {
@@ -65,20 +67,24 @@
     justify-content: center;
     width: 50%;
     height: 100%;
+    align-items: center;
 }
 
 .menu-background-color {
     background-color: rgba(0, 0, 0, 0.39);
+    -unity-text-outline-color: rgba(0, 0, 0, 0.85);
 }
 
 .menu-button-list {
     width: 50%;
     height: auto;
-    left: 149px;
-    position: absolute;
-    align-items: center;
-    top: 388px;
+    left: 0;
+    position: relative;
+    align-items: stretch;
+    top: 39px;
     font-size: 20px;
+    align-self: center;
+    justify-content: center;
 }
 
 .menu-button {
