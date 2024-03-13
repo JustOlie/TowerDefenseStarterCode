@@ -8,11 +8,17 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
+        
+
         if (target != null)
         {
             Vector3 direction = target.position - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+        else
+        {
+            Debug.LogWarning("No target to assign to projectile.");
         }
     }
 
@@ -24,26 +30,10 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        // Move the projectile towards the target
-        float step = speed * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, target.position, step);
+        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
 
-        // Check if the projectile has reached the target
-        if (Vector2.Distance(transform.position, target.position) < 0.2f)
+        if (Vector3.Distance(transform.position, target.position) < 0.2f)
         {
-            // Deal damage to the target
-            Enemy enemy = target.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.health -= damage;
-                if (enemy.health <= 0)
-                {
-                    // If the enemy's health is depleted, destroy it
-                    Destroy(enemy.gameObject);
-                }
-            }
-
-            // Destroy the projectile
             Destroy(gameObject);
         }
     }
