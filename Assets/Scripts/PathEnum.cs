@@ -9,16 +9,13 @@ public class PathEnum : MonoBehaviour
         Path1,
         Path2
     }
-    
-}
 
-public class TowerType : MonoBehaviour
-{
-    public enum Path
+    public enum Towers
     {
         Archer,
         Sword,
         Wizard
     }
-
 }
+
+
