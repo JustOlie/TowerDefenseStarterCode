@@ -15,6 +15,14 @@ public class PathEnum : MonoBehaviour
         Archer,
         Sword,
         Wizard
+    } 
+    
+    public enum SiteLevel
+    {
+        Onbebouwd, 
+        level1,
+        level2,
+        level3
     }
 }
 
