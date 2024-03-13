@@ -8,7 +8,7 @@ public class Tower : MonoBehaviour
     public float attackSize = 1f;
     public float projectileSpeed = 5f; // Speed of the projectile
     public GameObject bulletPrefab;
-    public TowerType type;
+    public PathEnum.Towers type;
 
     private float nextAttackTime;
 
@@ -33,10 +33,26 @@ public class Tower : MonoBehaviour
         }
     }
 
+    void ScanForEnemiesAndShoot()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
+
+        foreach( Collider2D col in hitColliders)
+        {
+            if (col.CompareTag("Enemy"))
+            {
+                ShootAtEnemy(col.gameObject);
+                break;
+            }
+        }
+    }
+
+
     void ShootAtEnemy(GameObject enemy)
     {
         // Instantiate the bullet
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        bullet.transform.localScale = new Vector3(attackSize, attackSize, 1f);
         // Set the damage of the bullet
         Projectile projectile = bullet.GetComponent<Projectile>();
         if (projectile != null)
@@ -44,14 +60,9 @@ public class Tower : MonoBehaviour
             projectile.damage = attackDamage;
             projectile.target = enemy.transform;
             projectile.speed = projectileSpeed; // Set the speed of the projectile
-            bullet.transform.localScale = new Vector3(attackSize, attackSize, 1f); // Set the scale of the bullet
+            
         }
     }
 
-    // Draw the attack range in the editor for easier debugging
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
+    
 }
