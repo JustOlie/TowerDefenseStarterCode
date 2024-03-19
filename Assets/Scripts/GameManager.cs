@@ -1,18 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameManager instance;
+
+    public List<GameObject> Archers;
+    public List<GameObject> Swords;
+    public List<GameObject> Wizards;
+
+    private ConstructionSite selectedSite;
+
+    void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SelectSite(ConstructionSite site)
     {
-        
+        selectedSite = site;
+        TowerMenu.instance.SetSite(selectedSite);
     }
 }
