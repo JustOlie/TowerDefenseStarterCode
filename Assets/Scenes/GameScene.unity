@@ -6048,14 +6048,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Archers:
+  - {fileID: 0}
   - {fileID: 2155559963968640269, guid: 467d9f3171adb054c9bbd4357c38852b, type: 3}
   - {fileID: 6056335916058878651, guid: 1af1b6f6f3a48e446946507703d2aacb, type: 3}
   - {fileID: 2388244393934336600, guid: f5604683e1d9b05459a273b8202d798e, type: 3}
   Swords:
+  - {fileID: 0}
   - {fileID: 3344645187185813200, guid: 464ae61f20835714fa07fbf1e1a9bd10, type: 3}
   - {fileID: 7440371240561408160, guid: 7de2102ab995e0a44b6ad4abbca8e8ae, type: 3}
   - {fileID: 1586945026072181620, guid: d8a13c2d29955ad45a12ab6f8719a182, type: 3}
   Wizards:
+  - {fileID: 0}
   - {fileID: 3039072353294755221, guid: 320b3d80edf5043498958d3881143872, type: 3}
   - {fileID: 5115201031378325765, guid: 944192bb0b740ae4bac8ba0d39cee16e, type: 3}
   - {fileID: 4433225369249546726, guid: 72b257c3b4da2e94790412da9cda9ba6, type: 3}

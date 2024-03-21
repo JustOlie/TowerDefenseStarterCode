@@ -89,6 +89,9 @@ public class TowerMenu : MonoBehaviour
         switch (siteLevel)
         {
             case 0:
+                archerbutton.SetEnabled(true);
+                wizardbutton.SetEnabled(true);
+                swordbutton.SetEnabled(true);
                 updatebutton.SetEnabled(false);
                 destroybutton.SetEnabled(false);
                 break;
@@ -97,6 +100,7 @@ public class TowerMenu : MonoBehaviour
                 archerbutton.SetEnabled(false);
                 wizardbutton.SetEnabled(false);
                 swordbutton.SetEnabled(false);
+                updatebutton.SetEnabled(true);
                 destroybutton.SetEnabled(true);
                 break;
             case 3:
