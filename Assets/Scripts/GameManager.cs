@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     {
         selectedSite = site;
         // Open het menu wanneer een site is geselecteerd
-        OpenMenu();
+        //OpenMenu();
 
         // Hier verkrijg je een referentie naar TowerMenu via GetComponent
         TowerMenu towerMenu = menu.GetComponent<TowerMenu>();

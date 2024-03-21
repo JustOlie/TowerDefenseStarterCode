@@ -77,7 +77,7 @@ public class TileClickDetector : MonoBehaviour
                 if (SelectedSite != null && GameManager.instance != null)
                 {
                     // Open het menu wanneer een site is geselecteerd
-                    GameManager.instance.SelectSite(SelectedSite);
+                    
                 }
             }
             else
@@ -89,5 +89,8 @@ public class TileClickDetector : MonoBehaviour
         {
             SelectedSite = null;
         }
+
+        GameManager.instance.SelectSite(SelectedSite);
     }
+
 }

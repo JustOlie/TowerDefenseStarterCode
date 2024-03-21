@@ -32,11 +32,11 @@ public class TowerMenu : MonoBehaviour
     {
         root = GetComponent<UIDocument>().rootVisualElement;
 
-        archerbutton = root.Q<Button>("archer-button");
-        swordbutton = root.Q<Button>("sword-button");
-        wizardbutton = root.Q<Button>("wizard-button");
-        upgradebutton = root.Q<Button>("upgrade-button");
-        destroybutton = root.Q<Button>("delete-button");
+        archerbutton = root.Q<Button>("archerbutton");
+        swordbutton = root.Q<Button>("swordbutton");
+        wizardbutton = root.Q<Button>("wizardbutton");
+        upgradebutton = root.Q<Button>("upgradebutton");
+        destroybutton = root.Q<Button>("deletebutton");
 
         if (archerbutton != null)
         {
@@ -74,6 +74,8 @@ public class TowerMenu : MonoBehaviour
     public void SetSite(ConstructionSite site)
     {
         selectedSite = site;
+        root.visible = selectedSite != null;
+        
         EvaluateMenu();
     }
 
