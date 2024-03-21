@@ -1,5 +1,4 @@
 using UnityEngine;
-
 using UnityEngine.UIElements;
 
 public class TowerMenu : MonoBehaviour
@@ -9,7 +8,7 @@ public class TowerMenu : MonoBehaviour
     private Button archerbutton;
     private Button swordbutton;
     private Button wizardbutton;
-    private Button upgradebutton;
+    private Button updatebutton;
     private Button destroybutton;
 
     private VisualElement root;
@@ -35,7 +34,7 @@ public class TowerMenu : MonoBehaviour
         archerbutton = root.Q<Button>("archerbutton");
         swordbutton = root.Q<Button>("swordbutton");
         wizardbutton = root.Q<Button>("wizardbutton");
-        upgradebutton = root.Q<Button>("upgradebutton");
+        updatebutton = root.Q<Button>("upgradebutton");
         destroybutton = root.Q<Button>("deletebutton");
 
         if (archerbutton != null)
@@ -53,9 +52,9 @@ public class TowerMenu : MonoBehaviour
             wizardbutton.clicked += OnWizardButtonClicked;
         }
 
-        if (upgradebutton != null)
+        if (updatebutton != null)
         {
-            upgradebutton.clicked += OnUpdateButtonClicked;
+            updatebutton.clicked += OnUpdateButtonClicked;
         }
 
         if (destroybutton != null)
@@ -75,7 +74,7 @@ public class TowerMenu : MonoBehaviour
     {
         selectedSite = site;
         root.visible = selectedSite != null;
-        
+
         EvaluateMenu();
     }
 
@@ -90,7 +89,7 @@ public class TowerMenu : MonoBehaviour
         switch (siteLevel)
         {
             case 0:
-                upgradebutton.SetEnabled(false);
+                updatebutton.SetEnabled(false);
                 destroybutton.SetEnabled(false);
                 break;
             case 1:
@@ -104,7 +103,7 @@ public class TowerMenu : MonoBehaviour
                 archerbutton.SetEnabled(false);
                 wizardbutton.SetEnabled(false);
                 swordbutton.SetEnabled(false);
-                upgradebutton.SetEnabled(false);
+                updatebutton.SetEnabled(false);
                 destroybutton.SetEnabled(true);
                 break;
             default:
@@ -113,31 +112,57 @@ public class TowerMenu : MonoBehaviour
         }
     }
 
-
     private void OnArcherButtonClicked()
     {
-        // Handle archer button click
+        GameManager.instance.Build(PathEnum.Towers.Archer, PathEnum.SiteLevel.level1);
     }
 
     private void OnSwordButtonClicked()
     {
-        // Handle sword button click
+        GameManager.instance.Build(PathEnum.Towers.Sword, PathEnum.SiteLevel.level1);
     }
 
     private void OnWizardButtonClicked()
     {
-        // Handle wizard button click
+        GameManager.instance.Build(PathEnum.Towers.Wizard, PathEnum.SiteLevel.level1);
     }
 
     private void OnUpdateButtonClicked()
     {
-        // Handle update button click
+        if (selectedSite == null)
+            return;
+
+        // Check if the selected site has a tower type
+        if (selectedSite.TowerType == null)
+        {
+            Debug.LogWarning("Cannot upgrade site because no tower has been built.");
+            return;
+        }
+
+        // Increase the level of the selected site by one
+        PathEnum.SiteLevel newLevel = selectedSite.Level + 1;
+
+        // Update the site with the new level
+        GameManager.instance.Build(selectedSite.TowerType.Value, newLevel);
+
+        // Update menu evaluation after upgrading
+        EvaluateMenu();
     }
 
     private void OnDestroyButtonClicked()
     {
-        // Handle destroy button click
+        if (selectedSite == null)
+            return;
+
+        // Destroy the tower on the selected site by setting its level to 0
+        selectedSite.SetTower(null, PathEnum.SiteLevel.level0, PathEnum.Towers.None);
+
+        // Update menu evaluation after destroying the tower
+        EvaluateMenu();
     }
+
+
+
 
     private void OnDestroy()
     {
@@ -156,14 +181,14 @@ public class TowerMenu : MonoBehaviour
             wizardbutton.clicked -= OnWizardButtonClicked;
         }
 
-        if (upgradebutton != null)
+        if (updatebutton != null)
         {
-            upgradebutton.clicked -= OnUpdateButtonClicked;
+            updatebutton.clicked -= OnUpdateButtonClicked;
         }
 
         if (destroybutton != null)
         {
-            destroybutton.clicked -= OnArcherButtonClicked;
+            destroybutton.clicked -= OnDestroyButtonClicked;
         }
     }
 }

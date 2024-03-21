@@ -12,6 +12,7 @@ public class PathEnum : MonoBehaviour
 
     public enum Towers
     {
+        None,
         Archer,
         Sword,
         Wizard
@@ -19,7 +20,7 @@ public class PathEnum : MonoBehaviour
     
     public enum SiteLevel
     {
-        Onbebouwd, 
+        level0, 
         level1,
         level2,
         level3
