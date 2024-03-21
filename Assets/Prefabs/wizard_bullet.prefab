@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1367369041586841583}
   - component: {fileID: 8842332056710934709}
   - component: {fileID: 8960368721222666228}
+  - component: {fileID: 824593726253246843}
   m_Layer: 0
   m_Name: wizard_bullet
   m_TagString: Untagged
@@ -112,3 +113,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &824593726253246843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6500393603661945561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e50ae22c42bce24898c94d839e51328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 1
+  damage: 1
