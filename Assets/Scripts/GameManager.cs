@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
 
     private ConstructionSite selectedSite;
 
+    // Referentie naar het menu
+    public GameObject menu;
+
     void Awake()
     {
         if (instance == null)
@@ -23,9 +26,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Methode om het menu te openen wanneer een site is geselecteerd
+    public void OpenMenu()
+    {
+        menu.SetActive(true); // Stel in dat het menu actief is
+        // Hier kun je verdere logica toevoegen om het menu aan te passen of te vullen op basis van de geselecteerde site
+    }
+
     public void SelectSite(ConstructionSite site)
     {
         selectedSite = site;
-        TowerMenu.instance.SetSite(selectedSite);
+        // Open het menu wanneer een site is geselecteerd
+        OpenMenu();
+
+        // Hier verkrijg je een referentie naar TowerMenu via GetComponent
+        TowerMenu towerMenu = menu.GetComponent<TowerMenu>();
+        if (towerMenu != null)
+        {
+            towerMenu.SetSite(selectedSite);
+        }
     }
+
 }
