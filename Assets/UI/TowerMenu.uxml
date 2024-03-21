@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/TowerMenu.uss?fileID=7433441132597879392&amp;guid=a874d76e1d69ee240a1402ddfa84be60&amp;type=3#TowerMenu" />
     <ui:VisualElement name="optie-balk" class="screen-optionbalk" style="width: 20%; align-self: flex-end; align-items: stretch; justify-content: center; bottom: auto; position: relative; height: 100%;">
-        <ui:Button text="Archer Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="archer-button" class="button" style="align-self: stretch; align-items: auto; font-size: 12px;" />
-        <ui:Button text="Wizard Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="wizard-button" class="button" style="align-self: stretch; font-size: 12px;" />
-        <ui:Button text="Sword Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="sword-button" class="button" style="-unity-text-align: middle-center; justify-content: flex-start; align-items: center; align-self: stretch; font-size: 12px;" />
-        <ui:Button text="Delete Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="delete-button" class="button" style="align-self: stretch; font-size: 12px;" />
-        <ui:Button text="Upgrade Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="upgrade-button" class="button" style="align-self: stretch; font-size: 12px;" />
+        <ui:Button text="Archer Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="archerbutton" class="button" style="align-self: stretch; align-items: auto; font-size: 12px;" />
+        <ui:Button text="Wizard Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="wizardbutton" class="button" style="align-self: stretch; font-size: 12px;" />
+        <ui:Button text="Sword Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="swordbutton" class="button" style="-unity-text-align: middle-center; justify-content: flex-start; align-items: center; align-self: stretch; font-size: 12px;" />
+        <ui:Button text="Delete Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="deletebutton" class="button" style="align-self: stretch; font-size: 12px;" />
+        <ui:Button text="Upgrade Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="upgradebutton" class="button" style="align-self: stretch; font-size: 12px;" />
     </ui:VisualElement>
 </ui:UXML>
