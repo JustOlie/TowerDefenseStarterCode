@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed = 1f;
-    public float health = 10f;
+    public float health;
     public int points = 1;
     public PathEnum.Path path { get; private set; }
     public List<GameObject> waypoints;
@@ -16,6 +16,19 @@ public class Enemy : MonoBehaviour
     {
         path = newPath;
         waypoints = (path == PathEnum.Path.Path1) ? EnemySpawner.Instance.Path1 : EnemySpawner.Instance.Path2;
+    }
+
+    public void Damage(int damage)
+    {
+        // Verminder de gezondheid van de vijand
+        health -= damage;
+
+        // Controleer of de gezondheid van de vijand kleiner of gelijk is aan nul
+        if (health <= 0)
+        {
+            // Vernietig het gameobject van de vijand als de gezondheid nul of negatief is
+            Destroy(gameObject);
+        }
     }
 
     // Start is called before the first frame update

@@ -8,8 +8,6 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
-        
-
         if (target != null)
         {
             Vector3 direction = target.position - transform.position;
@@ -34,6 +32,20 @@ public class Projectile : MonoBehaviour
 
         if (Vector3.Distance(transform.position, target.position) < 0.2f)
         {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Check if the bullet has hit an enemy
+        Enemy enemy = collision.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            // Call the enemy's Damage function to inflict damage
+            enemy.Damage(damage);
+
+            // Destroy the bullet after it has hit an enemy
             Destroy(gameObject);
         }
     }
