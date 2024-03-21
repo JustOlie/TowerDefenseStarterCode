@@ -47,6 +47,10 @@ public class Projectile : MonoBehaviour
 
             // Destroy the bullet after it has hit an enemy
             Destroy(gameObject);
+
+            // Debug message to indicate that the projectile has hit an enemy
+            Debug.Log("Projectile hit enemy!");
         }
     }
+
 }
