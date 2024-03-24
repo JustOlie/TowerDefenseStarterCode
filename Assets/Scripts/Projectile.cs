@@ -22,35 +22,42 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
+        // When target is null, it no longer exists and this
+        // object has to be removed
         if (target == null)
         {
             Destroy(gameObject);
             return;
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        // Move the projectile towards the target
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, target.position, step);
 
+        // Check if the distance between this object and
+        // the target is smaller than 0.2. If so, apply damage and destroy this object.
         if (Vector3.Distance(transform.position, target.position) < 0.2f)
         {
+            // Apply damage to the target
+            DealDamage();
+
+            // Destroy the projectile
             Destroy(gameObject);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void DealDamage()
     {
-        // Check if the bullet has hit an enemy
-        Enemy enemy = collision.GetComponent<Enemy>();
-        if (enemy != null)
+        // Check if the target has a collider
+        Collider targetCollider = target.GetComponent<Collider>();
+        if (targetCollider != null)
         {
-            // Call the enemy's Damage function to inflict damage
-            enemy.Damage(damage);
-
-            // Destroy the bullet after it has hit an enemy
-            Destroy(gameObject);
-
-            // Debug message to indicate that the projectile has hit an enemy
-            Debug.Log("Projectile hit enemy!");
+            // Apply damage to the target's health
+            Enemy enemy = target.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.Damage(damage);
+            }
         }
     }
-
 }

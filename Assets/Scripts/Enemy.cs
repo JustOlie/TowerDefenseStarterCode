@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed;
-    public float health;
-    public int points;
+    public float speed = 1f;
+    public float health = 10f;
+    public int points = 1;
     public PathEnum.Path path { get; private set; }
     public List<GameObject> waypoints;
     private int currentWaypointIndex = 0;
@@ -20,14 +20,13 @@ public class Enemy : MonoBehaviour
 
     public void Damage(int damage)
     {
-        Debug.Log("Damage bereken");
-        // Verminder de gezondheid van de vijand
+        // Verlaag de gezondheidswaarde
         health -= damage;
 
-        // Controleer of de gezondheid van de vijand kleiner of gelijk is aan nul
+        // Als de gezondheid kleiner of gelijk is aan nul
         if (health <= 0)
         {
-            // Vernietig het gameobject van de vijand als de gezondheid nul of negatief is
+            // Vernietig het game object
             Destroy(gameObject);
         }
     }
