@@ -1,0 +1,42 @@
+.TopMenu {
+    height: 29%;
+    width: 20%;
+    background-color: rgba(0, 0, 0, 0.53);
+    left: 0;
+}
+
+.button {
+    background-color: rgba(0, 0, 0, 0.85);
+    color: rgb(95, 95, 95);
+    -unity-font: url('project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&guid=e8d8d46cd1af4d440981456019001e31&type=3#NotInter-Regular');
+    font-size: 20px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 6px;
+    border-right-width: 6px;
+    border-bottom-width: 6px;
+    border-left-width: 6px;
+    border-top-left-radius: 17px;
+    border-top-right-radius: 17px;
+    border-bottom-right-radius: 17px;
+    border-bottom-left-radius: 17px;
+    height: 18%;
+    width: 62%;
+    left: 15%;
+}
+
+.button:hover {
+    background-color: rgba(24, 24, 24, 0.8);
+    color: rgb(255, 255, 255);
+}
+
+.button:active {
+    -unity-font-style: bold;
+    background-color: rgb(182, 182, 182);
+}
+
+.label {
+    color: rgb(255, 255, 255);
+}

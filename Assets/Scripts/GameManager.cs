@@ -1,18 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
+    private int currentCredits = 0;
+    private int currentHealth = 100;
+    private int currentWave = 1;
     public List<GameObject> Archers;
     public List<GameObject> Swords;
     public List<GameObject> Wizards;
 
     private ConstructionSite selectedSite;
-
-    // Referentie naar het menu
-    public GameObject menu;
+    public TopMenu topMenu; // Referentie naar het TopMenu-script
 
     void Awake()
     {
@@ -26,80 +25,62 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Methode om het menu te openen wanneer een site is geselecteerd
-    public void OpenMenu()
+    void Start()
     {
-        menu.SetActive(true); // Stel in dat het menu actief is
-        // Hier kun je verdere logica toevoegen om het menu aan te passen of te vullen op basis van de geselecteerde site
+        StartGame();
     }
 
-    public void SelectSite(ConstructionSite site)
+    void StartGame()
     {
-        selectedSite = site;
-        // Open het menu wanneer een site is geselecteerd
-        //OpenMenu();
+        // Stel de beginwaarden in
+        currentCredits = 200;
+        currentHealth = 10;
+        currentWave = 0;
 
-        // Hier verkrijg je een referentie naar TowerMenu via GetComponent
-        TowerMenu towerMenu = menu.GetComponent<TowerMenu>();
-        if (towerMenu != null)
-        {
-            towerMenu.SetSite(selectedSite);
-        }
+        // Update de labels in TopMenu
+        topMenu.SetCreditsLabel("Credits: " + currentCredits);
+        topMenu.SetHealthLabel("Health: " + currentHealth);
+        topMenu.SetWaveLabel("Wave: " + currentWave);
     }
-    public void Build(PathEnum.Towers type, PathEnum.SiteLevel level)
+
+    public void AttackGate()
     {
-        // Controleer of er een site is geselecteerd
-        if (selectedSite == null)
-        {
-            Debug.LogWarning("Er is geen site geselecteerd om te bouwen.");
-            return;
-        }
+        // Verminder de gezondheid met 1
+        currentHealth--;
 
-        // Selecteer de juiste lijst met prefab-torens op basis van het type toren
-        List<GameObject> towerList = null;
-        switch (type)
-        {
-            case PathEnum.Towers.Archer:
-                towerList = Archers;
-                break;
-            case PathEnum.Towers.Sword:
-                towerList = Swords;
-                break;
-            case PathEnum.Towers.Wizard:
-                towerList = Wizards;
-                break;
-            default:
-                Debug.LogError("Ongeldig torentype: " + type);
-                return;
-        }
+        // Update de label in TopMenu
+        topMenu.SetHealthLabel("Health: " + currentHealth);
+    }
 
-        // Controleer of de lijst met prefab-torens is toegewezen
-        if (towerList == null || towerList.Count == 0)
-        {
-            Debug.LogError("Er zijn geen prefab-torens beschikbaar voor het opgegeven type: " + type);
-            return;
-        }
+    public void AddCredits(int amount)
+    {
+        // Update de credits
+        currentCredits += amount;
 
-        // Controleer of het opgegeven niveau binnen het bereik van de prefab-torenlijst ligt
-        if ((int)level < 0 || (int)level >= towerList.Count)
-        {
-            Debug.LogError("Ongeldig niveau voor het opgegeven torentype: " + level);
-            return;
-        }
+        // Update de label in TopMenu
+        topMenu.SetCreditsLabel("Credits: " + currentCredits);
 
-        // Maak een toren uit de lijst van prefab-torens op basis van het opgegeven niveau
-        GameObject towerPrefab = towerList[(int)level];
-        if (towerPrefab == null)
-        {
-            Debug.LogError("Prefab-toren op niveau " + level + " is niet toegewezen.");
-            return;
-        }
+        // Controleer de torenmenu. Dit doet voorlopig niets,
+        // maar we zullen binnenkort code toevoegen om te controleren op credits
+    }
 
-        // Plaats de toren op de geselecteerde site
-        GameObject newTower = Instantiate(towerPrefab, selectedSite.WorldPosition, Quaternion.identity);
-        selectedSite.SetTower(newTower, level, type);
+    public void RemoveCredits(int amount)
+    {
+        // Vergelijkbaar met de vorige functie
+        currentCredits -= amount;
 
-        // Verberg het menu door null door te geven aan de SetSite-functie in TowerMenu
-        TowerMenu.instance.SetSite(null);
+        // Update de label in TopMenu
+        topMenu.SetCreditsLabel("Credits: " + currentCredits);
+    }
+
+    public int GetCredits()
+    {
+        return currentCredits;
+    }
+
+    public int GetCost(PathEnum.Towers type, PathEnum.SiteLevel level, bool selling = false)
+    {
+        // Return de kosten voor elk type toren
+        // De retourwaarde moet lager zijn als je verkoopt
     }
 }
