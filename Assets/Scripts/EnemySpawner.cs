@@ -1,4 +1,4 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +9,8 @@ public class EnemySpawner : MonoBehaviour
     public List<GameObject> Path1;
     public List<GameObject> Path2;
     public List<GameObject> Enemies;
+
+    private TopMenu topMenu; // Referentie naar het TopMenu-script
 
     private void Awake()
     {
@@ -23,46 +25,53 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy(int type)
+    void Start()
     {
-        if (type < 0 || type >= Enemies.Count)
-        {
-            Debug.LogError("Invalid enemy type index.");
-            return;
-        }
+        topMenu = GameManager.instance.topMenu; // Zoek het TopMenu-script
 
-        // Kies willekeurig tussen Path1 en Path2
-        PathEnum.Path randomPath = (PathEnum.Path)Random.Range(0, 2);
-        List<GameObject> selectedPath = (randomPath == PathEnum.Path.Path1) ? Path1 : Path2;
+        if (topMenu != null)
+        {
+            topMenu.startWaveButton.clicked += OnStartWaveButtonClicked; // Voeg een luisteraar toe aan de StartWaveButton
+        }
+        else
+        {
+            Debug.LogError("TopMenu not found!");
+        }
+    }
+
+    private void OnStartWaveButtonClicked()
+    {
+        StartEnemySpawning(); // Start met het spawnen van vijanden wanneer de knop wordt geklikt
+    }
+
+    private void StartEnemySpawning()
+    {
+        // Begin met het spawnen van vijanden
+        InvokeRepeating("SpawnEnemy", 2f, 2f);
+    }
+
+    private void SpawnEnemy()
+    {
+        // Kies een willekeurig pad
+        List<GameObject> selectedPath = (Random.Range(0, 2) == 0) ? Path1 : Path2;
 
         if (selectedPath.Count == 0)
         {
-            Debug.LogError(randomPath.ToString() + " is not assigned or empty.");
+            Debug.LogError("Selected path is not assigned or empty.");
             return;
         }
 
-        // Start bij de eerste variabele in de lijst van het gekozen pad
-        Vector3 spawnPosition = selectedPath[0].transform.position;
-        Quaternion spawnRotation = selectedPath[0].transform.rotation;
-
-        GameObject newEnemy = Instantiate(Enemies[type], spawnPosition, spawnRotation);
-        Enemy script = newEnemy.GetComponent<Enemy>();
-
-        // Stel het pad in voor de vijand
-        script.SetPath(randomPath);
+        // Kies een willekeurig type vijand
+        int enemyType = Random.Range(0, Enemies.Count);
 
         // Start bij het eerste punt van het pad
-        script.SetTarget(selectedPath[0]);
-    }
+        GameObject newEnemy = Instantiate(Enemies[enemyType], selectedPath[0].transform.position, selectedPath[0].transform.rotation);
+        Enemy enemyScript = newEnemy.GetComponent<Enemy>();
 
-    private void SpawnTester()
-    {
-        // Spawn een vijand
-        SpawnEnemy(0);
-    }
+        // Stel het pad in voor de vijand
+        enemyScript.SetPath((PathEnum.Path)(selectedPath == Path1 ? 0 : 1));
 
-    void Start()
-    {
-        InvokeRepeating("SpawnTester", 2f, 2f);
+        // Start de vijand bij het eerste punt van het pad
+        enemyScript.SetTarget(selectedPath[0]);
     }
 }

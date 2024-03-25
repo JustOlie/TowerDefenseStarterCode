@@ -3,6 +3,8 @@ using UnityEngine.UIElements;
 
 public class TopMenu : MonoBehaviour
 {
+    public static TopMenu instance;
+
     public Label waveLabel;
     public Label creditsLabel;
     public Label healthLabel;

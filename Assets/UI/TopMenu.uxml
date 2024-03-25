@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/TopMenu.uss?fileID=7433441132597879392&amp;guid=b4d934edfed2b72428d5034f130ea948&amp;type=3#TopMenu" />
     <ui:VisualElement class="TopMenu">
-        <ui:Button text="START" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" class="button" />
+        <ui:Button text="START" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true" name="startWaveButton" class="button" />
         <ui:Label tabindex="-1" text="Wave:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="waveLabel" class="label" />
         <ui:Label tabindex="-1" text="Credits:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="creditsLabel" class="label" />
         <ui:Label tabindex="-1" text="Gate health:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="healthLabel" class="label" />
