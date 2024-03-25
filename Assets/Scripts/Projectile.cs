@@ -39,25 +39,12 @@ public class Projectile : MonoBehaviour
         if (Vector3.Distance(transform.position, target.position) < 0.2f)
         {
             // Apply damage to the target
-            DealDamage();
+            target.GetComponent<Enemy>().Damage(damage);
 
             // Destroy the projectile
             Destroy(gameObject);
         }
     }
 
-    void DealDamage()
-    {
-        // Check if the target has a collider
-        Collider targetCollider = target.GetComponent<Collider>();
-        if (targetCollider != null)
-        {
-            // Apply damage to the target's health
-            Enemy enemy = target.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.Damage(damage);
-            }
-        }
-    }
+   
 }
