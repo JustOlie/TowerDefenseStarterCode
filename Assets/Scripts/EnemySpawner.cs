@@ -10,8 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public List<GameObject> Path2;
     public List<GameObject> Enemies;
 
-    private TopMenu topMenu; // Referentie naar het TopMenu-script
-
+    
     private void Awake()
     {
         if (Instance == null)
@@ -22,20 +21,6 @@ public class EnemySpawner : MonoBehaviour
         {
             Destroy(gameObject);
             return;
-        }
-    }
-
-    void Start()
-    {
-        topMenu = GameManager.instance.topMenu; // Zoek het TopMenu-script
-
-        if (topMenu != null)
-        {
-            topMenu.startWaveButton.clicked += OnStartWaveButtonClicked; // Voeg een luisteraar toe aan de StartWaveButton
-        }
-        else
-        {
-            Debug.LogError("TopMenu not found!");
         }
     }
 
@@ -50,7 +35,7 @@ public class EnemySpawner : MonoBehaviour
         InvokeRepeating("SpawnEnemy", 2f, 2f);
     }
 
-    private void SpawnEnemy()
+    public void SpawnEnemy()
     {
         // Kies een willekeurig pad
         List<GameObject> selectedPath = (Random.Range(0, 2) == 0) ? Path1 : Path2;

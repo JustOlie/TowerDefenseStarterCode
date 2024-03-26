@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     private int currentCredits = 0;
     private int currentHealth = 100;
-    private int currentWave = 1;
+    private int currentWave = 0;
+    public int numberOfWaves = 5; 
     public List<GameObject> Archers;
     public List<GameObject> Swords;
     public List<GameObject> Wizards;
@@ -37,8 +38,48 @@ public class GameManager : MonoBehaviour
 
     public void StartWave(int waveIndex)
     {
-        // Implementeer de logica om de golf te starten
-        Debug.Log("Wave " + waveIndex + " gestart!");
+        // Incrementeer de huidige wave
+        currentWave++;
+
+        // Update de labels in TopMenu met de huidige wave
+        if (topMenu != null)
+        {
+            topMenu.GetComponent<TopMenu>().SetWaveLabel("Wave: " + currentWave);
+        }
+        else
+        {
+            Debug.LogError("TopMenu is niet toegewezen in de Inspector!");
+        }
+
+        // Implementeer de logica om vijanden te laten spawnen
+        SpawnEnemiesForWave(currentWave);
+
+        // Als het het laatste wave is, stop dan de wave-sequentie
+        if (currentWave >= numberOfWaves)
+        {
+            Debug.Log("Laatste wave bereikt! Spel is afgelopen.");
+            // Voeg hier eventuele logica toe voor het einde van het spel
+        }
+    }
+
+    public void StartFirstWave()
+    {
+        StartWave(1);
+    }
+    private void SpawnEnemiesForWave(int waveIndex)
+    {
+        // Implementeer hier logica om vijanden te spawnen voor de gegeven wave
+        // Dit kan variëren afhankelijk van je spellogica en design
+        // Je kunt bijvoorbeeld een bepaald aantal vijanden spawnen en de typen vijanden variëren naarmate de waves vorderen
+        // Hier is een eenvoudige implementatie voor demonstratiedoeleinden:
+
+        int numberOfEnemies = waveIndex * 5; // Bijvoorbeeld, elke wave heeft 5 meer vijanden dan de vorige wave
+
+        for (int i = 0; i < numberOfEnemies; i++)
+        {
+            // Roep SpawnEnemy() aan uit EnemySpawner of implementeer de logica hier indien nodig
+            EnemySpawner.Instance.SpawnEnemy();
+        }
     }
 
     void Start()
@@ -83,11 +124,25 @@ public class GameManager : MonoBehaviour
     public void Build(PathEnum.Towers type, PathEnum.SiteLevel level)
     {
         // Controleer of er een site is geselecteerd
+        // Controleer of er een site is geselecteerd
         if (selectedSite == null)
         {
             Debug.LogWarning("Er is geen site geselecteerd om te bouwen.");
             return;
         }
+
+        // Bepaal de kosten van de toren
+        int cost = GetCost(type, level);
+
+        // Controleer of er genoeg credits zijn om de toren te bouwen
+        if (currentCredits < cost)
+        {
+            Debug.LogWarning("Onvoldoende credits om de toren te bouwen.");
+            return;
+        }
+
+        // Verlaag de credits met de kosten van de toren
+        RemoveCredits(cost);
 
         // Selecteer de juiste lijst met prefab-torens op basis van het type toren
         List<GameObject> towerList = null;
