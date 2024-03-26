@@ -9,8 +9,9 @@ public class EnemySpawner : MonoBehaviour
     public List<GameObject> Path1;
     public List<GameObject> Path2;
     public List<GameObject> Enemies;
+    private int ufoCounter = 0;
 
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -35,28 +36,59 @@ public class EnemySpawner : MonoBehaviour
         InvokeRepeating("SpawnEnemy", 2f, 2f);
     }
 
-    public void SpawnEnemy()
+    public void SpawnEnemy(int enemyType, List<GameObject> selectedPath)
     {
-        // Kies een willekeurig pad
-        List<GameObject> selectedPath = (Random.Range(0, 2) == 0) ? Path1 : Path2;
-
         if (selectedPath.Count == 0)
         {
             Debug.LogError("Selected path is not assigned or empty.");
             return;
         }
 
-        // Kies een willekeurig type vijand
-        int enemyType = Random.Range(0, Enemies.Count);
-
-        // Start bij het eerste punt van het pad
+        // Start at the first point of the path
         GameObject newEnemy = Instantiate(Enemies[enemyType], selectedPath[0].transform.position, selectedPath[0].transform.rotation);
         Enemy enemyScript = newEnemy.GetComponent<Enemy>();
 
-        // Stel het pad in voor de vijand
+        // Set the path for the enemy
         enemyScript.SetPath((PathEnum.Path)(selectedPath == Path1 ? 0 : 1));
 
-        // Start de vijand bij het eerste punt van het pad
+        // Start the enemy at the first point of the path
         enemyScript.SetTarget(selectedPath[0]);
+    }
+
+    public void StartWave(int number)
+    {
+        ufoCounter = 0; // Reset counter
+
+        switch (number)
+        {
+            case 1:
+                InvokeRepeating("StartWave1", 1f, 1.5f);
+                break;
+                // Add more cases for additional waves as needed
+        }
+    }
+
+    public void StartWave1()
+    {
+        ufoCounter++;
+
+        // Leave some gaps
+        if (ufoCounter % 6 <= 1) return;
+
+        if (ufoCounter < 30)
+        {
+            EnemySpawner.Instance.SpawnEnemy(0, EnemySpawner.Instance.Path1);
+        }
+        else
+        {
+            // The last Enemy will be level 2
+            EnemySpawner.Instance.SpawnEnemy(1, EnemySpawner.Instance.Path2);
+        }
+
+        if (ufoCounter > 30)
+        {
+            CancelInvoke("StartWave1"); // Stop the wave spawning
+            GameManager.instance.EndWave(); // Notify GameManager that the wave has ended
+        }
     }
 }

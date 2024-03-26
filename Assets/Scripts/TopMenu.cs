@@ -62,6 +62,6 @@ public class TopMenu : MonoBehaviour
         int currentWaveIndex = GameManager.instance.GetCurrentWaveIndex();
         int nextWaveIndex = currentWaveIndex + 1;
         // Start de volgende golf
-        GameManager.instance.StartFirstWave();
+        GameManager.instance.StartWave();
     }
 }

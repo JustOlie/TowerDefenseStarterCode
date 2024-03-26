@@ -6108,6 +6108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beddcdb766525ec4faca47aba9da1af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfWaves: 10
   Archers:
   - {fileID: 0}
   - {fileID: 2155559963968640269, guid: 467d9f3171adb054c9bbd4357c38852b, type: 3}

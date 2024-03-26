@@ -1,14 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     private int currentCredits = 0;
     private int currentHealth = 100;
     private int currentWave = 0;
-    public int numberOfWaves = 5; 
+    public int numberOfWaves = 5;
     public List<GameObject> Archers;
     public List<GameObject> Swords;
     public List<GameObject> Wizards;
@@ -16,7 +15,6 @@ public class GameManager : MonoBehaviour
     private ConstructionSite selectedSite;
     public GameObject topMenu; // Referentie naar het TopMenu-object
     public GameObject menu; // Referentie naar het menu-object
-
 
     void Awake()
     {
@@ -36,12 +34,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartWave(int waveIndex)
-    {
-        // Incrementeer de huidige wave
-        currentWave++;
+    private bool waveActive = false;
 
-        // Update de labels in TopMenu met de huidige wave
+    public void StartWave()
+    {
+        currentWave++; // Verhoog de waarde van currentWave
+
+        // Verander het label voor de huidige golf in topMenu
         if (topMenu != null)
         {
             topMenu.GetComponent<TopMenu>().SetWaveLabel("Wave: " + currentWave);
@@ -51,34 +50,34 @@ public class GameManager : MonoBehaviour
             Debug.LogError("TopMenu is niet toegewezen in de Inspector!");
         }
 
-        // Implementeer de logica om vijanden te laten spawnen
-        SpawnEnemiesForWave(currentWave);
+        waveActive = true; // Verander waveActive naar true
 
-        // Als het het laatste wave is, stop dan de wave-sequentie
-        if (currentWave >= numberOfWaves)
-        {
-            Debug.Log("Laatste wave bereikt! Spel is afgelopen.");
-            // Voeg hier eventuele logica toe voor het einde van het spel
-        }
+        // Roep SpawnEnemiesForWave aan om vijanden te spawnen voor de huidige golf
+        SpawnEnemiesForWave(currentWave);
     }
 
-    public void StartFirstWave()
+    public void EndWave()
     {
-        StartWave(1);
+        waveActive = false; // Change waveActive to false
     }
     private void SpawnEnemiesForWave(int waveIndex)
     {
-        // Implementeer hier logica om vijanden te spawnen voor de gegeven wave
-        // Dit kan variëren afhankelijk van je spellogica en design
-        // Je kunt bijvoorbeeld een bepaald aantal vijanden spawnen en de typen vijanden variëren naarmate de waves vorderen
-        // Hier is een eenvoudige implementatie voor demonstratiedoeleinden:
+        // Implement logic to spawn enemies for the given wave
+        // This may vary depending on your game logic and design
+        // For demonstration purposes, here's a simple implementation:
 
-        int numberOfEnemies = waveIndex * 5; // Bijvoorbeeld, elke wave heeft 5 meer vijanden dan de vorige wave
+        int numberOfEnemies = waveIndex * 5; // For example, each wave has 5 more enemies than the previous wave
 
         for (int i = 0; i < numberOfEnemies; i++)
         {
-            // Roep SpawnEnemy() aan uit EnemySpawner of implementeer de logica hier indien nodig
-            EnemySpawner.Instance.SpawnEnemy();
+            // Choose a random enemy type
+            int enemyType = Random.Range(0, EnemySpawner.Instance.Enemies.Count);
+
+            // Choose a random path
+            List<GameObject> selectedPath = (Random.Range(0, 2) == 0) ? EnemySpawner.Instance.Path1 : EnemySpawner.Instance.Path2;
+
+            // Call SpawnEnemy with the chosen enemyType and selectedPath
+            EnemySpawner.Instance.SpawnEnemy(enemyType, selectedPath);
         }
     }
 
