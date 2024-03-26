@@ -295,5 +295,27 @@ public class GameManager : MonoBehaviour
 
         return cost;
     }
+    public void ReduceHealth(int amount)
+    {
+        // Verminder de gezondheid van de speler met het opgegeven bedrag
+        currentHealth -= amount;
+
+        // Update de label in TopMenu
+        if (topMenu != null)
+        {
+            topMenu.GetComponent<TopMenu>().SetHealthLabel("Health: " + currentHealth);
+        }
+        else
+        {
+            Debug.LogError("TopMenu is niet toegewezen in de Inspector!");
+        }
+
+        // Controleer of de speler geen gezondheid meer heeft
+        if (currentHealth <= 0)
+        {
+            // Implementeer logica voor game over
+            Debug.Log("Game over! De poort is vernietigd.");
+        }
+    }
 }
 

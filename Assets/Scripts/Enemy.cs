@@ -11,12 +11,17 @@ public class Enemy : MonoBehaviour
     public List<GameObject> waypoints;
     private int currentWaypointIndex = 0;
 
+    private GameManager gameManager;
+
+
     // Set het pad voor de vijand
     public void SetPath(PathEnum.Path newPath)
     {
         path = newPath;
         waypoints = (path == PathEnum.Path.Path1) ? EnemySpawner.Instance.Path1 : EnemySpawner.Instance.Path2;
     }
+
+
 
     public void Damage(int damage)
     {
@@ -35,6 +40,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         SetTarget(waypoints[currentWaypointIndex]);
+        gameManager = GameManager.instance;
     }
 
     // Set het doelwit voor de vijand
@@ -42,6 +48,30 @@ public class Enemy : MonoBehaviour
     {
         currentWaypointIndex = waypoints.IndexOf(newTarget);
     }
+    private void OnDestroy()
+    {
+        // Get the remaining health of the enemy and convert it to an integer
+        int remainingHealth = (int)GetComponent<Enemy>().health;
+
+        // Check if this is the last enemy on the path
+        if (isLastEnemyOnPath())
+        {
+            // Reduce the player's health
+            GameManager.instance.ReduceHealth(remainingHealth);
+        }
+    }
+
+    private bool isLastEnemyOnPath()
+    {
+        // Implementeer hier de logica om te controleren of dit de laatste vijand op het pad is
+        // Dit hangt af van hoe je vijanden beheert en of je een manier hebt om te weten dat dit de laatste vijand is
+        // Dit kan variëren afhankelijk van je implementatie
+        // Een mogelijke aanpak is om te controleren of dit GameObject het laatste in de lijst is, als je een lijst van vijanden hebt
+        // Of je kunt een teller bijhouden die wordt verlaagd wanneer een vijand wordt vernietigd, en controleer of deze 0 is
+        // Voor demonstratiedoeleinden zal ik een vereenvoudigde aanpak gebruiken waarbij we ervan uitgaan dat dit altijd de laatste vijand is op het pad
+        return true;
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -63,6 +93,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
+
                 // Als alle waypoints zijn bereikt, vernietig de vijand
                 Destroy(gameObject);
             }
